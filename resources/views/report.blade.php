@@ -22,7 +22,7 @@
                 <h5 class="card-title">Search Report By Date</h5>
 
                 <!-- Multi Columns Form -->
-                <form class="row g-3" action='{{ route("ReportByDate") }}' method="POST">
+                <form class="row g-3" action='{{ route("ReportByDate") }}' method="GET">
                     @csrf
                     <div class="col-md-6">
                     <label for="startDate" class="form-label">Start Date</label>
@@ -56,7 +56,7 @@
                   new Chart(document.querySelector('#lineChart'), {
                     type: 'line',
                     data: {
-                      labels: <?php if(isset($time)){echo $time;} ?>,
+                      labels: <?php if(isset($tanggal)){echo $tanggal;} ?>,
                       datasets: [{
                         label: 'Kelembapan 1',
                         data: <?php if(isset($kelembapan1_data)){echo $kelembapan1_data;} ?>,
@@ -95,89 +95,173 @@
           </div>
         </div>
 
-        
+        <div class="col-lg-12">
+        @if(session('success'))
+        <div class="alert alert-success bg-success text-light border-0 alert-dismissible fade show" role="alert">
+            {{ session('success') }}
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        @endif
+        </div>
+
+        <div class="col-lg-12">
+
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Data Tables</h5>
+              
+              <!-- Table with stripped rows -->
+              <table class="table datatable">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Average Value</th>
+                    <th scope="col">Soil Moisture 1</th>
+                    <th scope="col">Soil Moisture 2</th>
+                    <th scope="col">Light Intensity</th>
+                    <th scope="col">Relay Status</th>
+                    <th scope="col">Date and Time</th>
+                    <th scope="col">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @isset($datas)
+                    @foreach($datas as $key =>$d)
+                    <tr>
+                      <th scope="row">{{ $key + 1 }}</th>
+                      <td>{{ $d -> TotalValue }}</td>
+                      <td>{{ $d -> ValueKelembapan1 }}</td>
+                      <td>{{ $d -> ValueKelembapan2 }}</td>
+                      <td>{{ $d -> ValueCahaya }}</td>
+                      <td>{{ $d -> StatusRelay }}</td>
+                      <td>{{ $d -> Tanggal }} | {{ $d -> Waktu }}</td>
+                      <td>
+                        <!-- <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#basicModal" data-id="{{ $d -> id_Data }}">
+                          <i class="bi bi-info-circle"></i>
+                        </button> -->
+                        <!-- <form role="form" method="POST" action="{{ route('DeleteData', ['id' => $d->id_Data]) }}"> -->
+                          <!-- @csrf -->
+                          <button type="submit" onclick="delete_data('{{ $d -> id_Data }}')" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#basicModal">
+                              <i class="bi bi-trash-fill"></i>
+                          </button>
+                      <!-- </form> -->
+                      </td>
+                    </tr>
+                    @endforeach
+                    @endisset
+                </tbody>
+              </table>
+              <!-- End Table with stripped rows -->
+
+            </div>
+          </div>
+
+        </div>
 
       </div>
     </section>
 
-  </main><!-- End #main -->
-  <!-- <script>
-    getDataChart();
-      function getDataChart(){
-
-        var startDate = $("startDate").val();
-        var endDate = $("endDate").val();
-
-        $.ajax({
-          type:'POST',
-          url:'{{ route("ReportByDate") }}',
-          data:{
-              '_token':'<?php echo csrf_token() ?>',
-              startDate : startDate,
-              endDate : endDate
-          },
-          success: function(data){
-              renderChart(data.kelembapan1_data, data.kelembapan2_data, data.cahaya_data,data.time).render();
-          },
-          error: function(xhr){
-              console.log(xhr);
-          }
-        });
-      }
-      function renderChart(kelembapan1,kelembapan2,cahaya1,date){
-      document.querySelector("#reportsChart").innerHTML = "";
-      let chart = new ApexCharts(document.querySelector("#reportsChart"), {
-         series: [{
-            name: 'Sensor kelembapan 1',
-            data: kelembapan1,
-         }, {
-            name: 'Sensor Kelembapan 2',
-            data: kelembapan2
-         }, {
-            name: 'Sensor Intensistas Cahaya',
-            data: cahaya1
-         }],
-         chart: {
-            height: 350,
-            type: 'area',
-            toolbar: {
-            show: false
-            },
-         },
-         markers: {
-            size: 4
-         },
-         colors: ['#4154f1', '#ff771d', '#4bf542'],
-         fill: {
-            type: "gradient",
-            gradient: {
-               shadeIntensity: 1,
-               opacityFrom: 0.3,
-               opacityTo: 0.4,
-               stops: [0, 90, 100]
-            }
-         },
-         dataLabels: {
-            enabled: false
-         },
-         stroke: {
-            curve: 'smooth',
-            width: 2
-         },
-         xaxis: {
-            type: 'datetime',
-            categories: date,
-            labels: {
-                    datetimeUTC: false
-                },
-         },
-         tooltip: {
-            x: {
-               format: 'dd/MM/yy'
-            },
-         }
-      });
-      return chart;
-   }
-  </script> -->
+  </main>
   @endsection
+  <script>
+
+    function delete_data(id){
+      const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+          confirmButton: 'btn btn-success',
+          cancelButton: 'btn btn-danger'
+        },
+        buttonsStyling: false
+      })
+      swalWithBootstrapButtons.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'No, cancel!',
+        reverseButtons: true
+      }).then((result) => {
+        if (result.isConfirmed) {
+          $.ajax({
+            type: 'POST',
+            url: '{{ route("DeleteData") }}', 
+            data: {
+              '_token': '{{ csrf_token() }}',
+              'id': id,
+            },
+            success: function(data) {
+              console.log(data);
+              if (data.status == "sukses") {
+                swalWithBootstrapButtons.fire(
+                  'Deleted!',
+                  'Your file has been deleted.',
+                  'success'
+                );
+                location.reload();
+              } else {
+                swalWithBootstrapButtons.fire(
+                  'Failed',
+                  'Your file cannot be deleted.',
+                  'error'
+                );
+              }
+            },
+            error: function() {
+              swalWithBootstrapButtons.fire(
+                  'Error',
+                  'Server Error',
+                  'error'
+                );
+            }
+          });
+          
+        } 
+      })
+    }
+
+
+  //   function delete_data(id) {
+  //   swal.fire({
+  //     title: "Hapus Data",
+  //     text: "Apakah Anda yakin ingin menghapus data ini?",
+  //     icon: "warning",
+  //     buttons: true,
+  //     dangerMode: true,
+  //   })
+  //   .then((willDelete) => { 
+  //     if (willDelete.value) {
+  //       $.ajax({
+  //         type: 'POST',
+  //         url: '{{ route("DeleteData") }}', 
+  //         data: {
+  //           '_token': '{{ csrf_token() }}',
+  //           'id': id,
+  //         },
+  //         success: function(data) {
+  //           console.log(data);
+  //           if (data.status == "sukses") {
+  //             swal("Data berhasil dihapus", {
+  //               icon: "success",
+  //             })
+  //             .then(() => {
+  //               location.reload();
+  //             });
+  //           } else {
+  //             swal("Gagal menghapus data", {
+  //               icon: "error",
+  //             });
+  //           }
+  //         },
+  //         error: function() {
+  //           swal("Terjadi kesalahan saat menghapus data", {
+  //             icon: "error",
+  //           });
+  //         }
+  //       });
+  //     }
+  //   });
+  // }
+
+
+  </script>

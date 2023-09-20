@@ -399,6 +399,7 @@
           }
         });
       }
+      
       function renderChart(kelembapan1,kelembapan2,cahaya1,date){
       document.querySelector("#reportsChart").innerHTML = "";
       let chart = new ApexCharts(document.querySelector("#reportsChart"), {

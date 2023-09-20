@@ -24,10 +24,12 @@ Route::get('/report', function () {
     return view('report', [
         "title" => "Report" 
     ]);
-});
+})->name('report');
 
 Route::get('datasToday', [App\Http\Controllers\HomeController::class, 'DatasToday'])-> name('datasToday');
 Route::post('renderChartHome', [App\Http\Controllers\HomeController::class, 'renderChartHome'])->name('renderChartHome');
 Route::get('detailLogSiram', [App\Http\Controllers\HomeController::class, 'DetailLogSiram'])->name('detailLogSiram');
 
-Route::post('ReportByDate', [App\Http\Controllers\ReportController::class, 'ReportByDate'])->name('ReportByDate');
+Route::get('ReportByDate', [App\Http\Controllers\ReportController::class, 'ReportByDate'])->name('ReportByDate');
+// Route::post('/delete-data/{id}', [App\Http\Controllers\ReportController::class, 'DeleteData'])->name('DeleteData');
+Route::post('delete-data', [App\Http\Controllers\ReportController::class, 'DeleteData'])->name('DeleteData');
