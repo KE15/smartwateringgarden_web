@@ -12,7 +12,7 @@ class HomeController extends Controller
     public function renderChartHome(Request $request)
     {
         $timetoday = date('Y-m-d'); 
-        // $timetoday = '2023-09-11'; 
+        // $timetoday = '2023-09-14'; 
 
         $datas = DB::table('tdata')
         ->select('TotalValue', 'ValueKelembapan1','ValueKelembapan2', 'ValueCahaya' , 'Waktu')
@@ -36,7 +36,7 @@ class HomeController extends Controller
 
     public function DatasToday()
     {   
-        // $timetoday = '2023-09-11';
+        // $timetoday = '2023-09-14';
         $timetoday = date('Y-m-d'); 
         $datas = DB::table('tdata')
         ->select('TotalValue', 'ValueKelembapan1', 'ValueKelembapan2', 'ValueCahaya', 'id_Device')

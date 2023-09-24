@@ -319,11 +319,14 @@
           dataType: 'json',
           success:function(data){
             console.log(data);
-            $('#idDevice').text(data.datas[0].id_Device);
-            $('#avgValue').text(data.datas[0].TotalValue);
-            $('#soil1').text(data.datas[0].ValueKelembapan1);
-            $('#soil2').text(data.datas[0].ValueKelembapan2);
-            $('#light1').text(data.datas[0].ValueCahaya);
+            if(data.datas.length > 0){
+              $('#idDevice').text(data.datas[0].id_Device);
+              $('#avgValue').text(data.datas[0].TotalValue);
+              $('#soil1').text(data.datas[0].ValueKelembapan1);
+              $('#soil2').text(data.datas[0].ValueKelembapan2);
+              $('#light1').text(data.datas[0].ValueCahaya);
+            }
+            
           }
         });
       }

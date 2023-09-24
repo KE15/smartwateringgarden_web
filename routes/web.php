@@ -14,11 +14,17 @@ use Illuminate\Support\Facades\DB;
 |
 */
 
+Route::get('login', function(){
+    return view('login');
+});
 
+// Route::get('login', [App\Http\Controllers\UserController::class, 'index']);
+Route::post('login', [App\Http\Controllers\UserController::class, 'loginAuth'])->name('loginAuth');
+Route::post('logout', [App\Http\Controllers\UserController::class, 'logout'])->name('logout');
 
 Route::get('/', function (){
     return view('index');
-});
+})->name('index');
 
 Route::get('/report', function () {
     return view('report', [
