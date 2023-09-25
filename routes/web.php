@@ -39,3 +39,4 @@ Route::get('detailLogSiram', [App\Http\Controllers\HomeController::class, 'Detai
 Route::get('ReportByDate', [App\Http\Controllers\ReportController::class, 'ReportByDate'])->name('ReportByDate');
 // Route::post('/delete-data/{id}', [App\Http\Controllers\ReportController::class, 'DeleteData'])->name('DeleteData');
 Route::post('delete-data', [App\Http\Controllers\ReportController::class, 'DeleteData'])->name('DeleteData');
+Route::delete('deleteDataByDate', [App\Http\Controllers\ReportController::class, 'DeleteDataByDate'])->name('DeleteDataByDate');

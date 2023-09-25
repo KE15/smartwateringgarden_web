@@ -26,7 +26,7 @@ class UserController extends Controller
 
         if ($dataUser && $reqPass == $dataUser->Password) {
             $request->session()->regenerate();
-            session(['idUser' => $dataUser->id_User, 'username' => $dataUser->Username]);
+            session(['idUser' => $dataUser->id_User, 'username' => $dataUser->Username, 'name' => $dataUser->Nama]);
             return redirect() -> route('index');
 
         }

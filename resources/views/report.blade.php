@@ -43,6 +43,40 @@
           </div>
         </div><!-- End Left side columns -->
 
+         
+        <!-- Right side columns -->
+        <div class="col-lg-6">
+
+          <!-- Recent Activity -->
+          <div class="card">
+            <div class="filter">
+            </div>
+
+            <div class="card-body">
+              <h5 class="card-title">Delete Data By Date <span>| This action will delete your datas by date.</span></h5>
+              <!-- Multi Columns Form -->
+              <form class="row g-3" id="form_deletedata">
+                  @csrf
+                  <div class="col-md-6">
+                  <label for="startDate" class="form-label">Start Date</label>
+                  <input type="date" class="form-control" id="delete_startDate" name="delete_startDate" value="<?php if(isset($startDate)){echo $startDate;} ?>" disabled>
+                  </div>
+                  <div class="col-md-6">
+                  <label for="endDate" class="form-label">End Date</label>
+                  <input type="date" class="form-control" id="delete_endDate" name="delete_endDate" value="<?php if(isset($endDate)){echo $endDate;} ?>" disabled>
+                  </div>
+              
+                  <div class="text-center">
+                  <button type="button" class="btn btn-danger" onclick="delete_bydate()">Delete</button>
+                  </div>
+              </form><!-- End Multi Columns Form -->
+
+
+            </div>
+          </div><!-- End Recent Activity -->
+
+        </div><!-- End Right side columns -->
+
 
         <div class="col-lg-12">
           <div class="card">
@@ -120,7 +154,8 @@
                     <th scope="col">Soil Moisture 2</th>
                     <th scope="col">Light Intensity</th>
                     <th scope="col">Relay Status</th>
-                    <th scope="col">Date and Time</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Time</th>
                     <th scope="col">Action</th>
                   </tr>
                 </thead>
@@ -134,7 +169,8 @@
                       <td>{{ $d -> ValueKelembapan2 }}</td>
                       <td>{{ $d -> ValueCahaya }}</td>
                       <td>{{ $d -> StatusRelay }}</td>
-                      <td>{{ $d -> Tanggal }} | {{ $d -> Waktu }}</td>
+                      <td>{{ $d -> Tanggal }}</td>
+                      <td>{{ $d -> Waktu }}</td>
                       <td>
                         <!-- <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#basicModal" data-id="{{ $d -> id_Data }}">
                           <i class="bi bi-info-circle"></i>
@@ -220,48 +256,61 @@
       })
     }
 
-
-  //   function delete_data(id) {
-  //   swal.fire({
-  //     title: "Hapus Data",
-  //     text: "Apakah Anda yakin ingin menghapus data ini?",
-  //     icon: "warning",
-  //     buttons: true,
-  //     dangerMode: true,
-  //   })
-  //   .then((willDelete) => { 
-  //     if (willDelete.value) {
-  //       $.ajax({
-  //         type: 'POST',
-  //         url: '{{ route("DeleteData") }}', 
-  //         data: {
-  //           '_token': '{{ csrf_token() }}',
-  //           'id': id,
-  //         },
-  //         success: function(data) {
-  //           console.log(data);
-  //           if (data.status == "sukses") {
-  //             swal("Data berhasil dihapus", {
-  //               icon: "success",
-  //             })
-  //             .then(() => {
-  //               location.reload();
-  //             });
-  //           } else {
-  //             swal("Gagal menghapus data", {
-  //               icon: "error",
-  //             });
-  //           }
-  //         },
-  //         error: function() {
-  //           swal("Terjadi kesalahan saat menghapus data", {
-  //             icon: "error",
-  //           });
-  //         }
-  //       });
-  //     }
-  //   });
-  // }
-
+    function delete_bydate(){
+      const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+          confirmButton: 'btn btn-success',
+          cancelButton: 'btn btn-danger'
+        },
+        buttonsStyling: false
+      })
+      swalWithBootstrapButtons.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'No, cancel!',
+        reverseButtons: true
+      }).then((result) => {
+        if (result.isConfirmed) {
+          $.ajax({
+            type: 'DELETE',
+            url: '{{ route("DeleteDataByDate") }}', 
+            data: {
+              '_token': '{{ csrf_token() }}',
+              'delete_startDate' : document.getElementById("startDate").value,
+              'delete_endDate' : document.getElementById("endDate").value,
+              // 'id': id,
+            },
+            success: function(data) {
+              console.log(data);
+              if (data.status == "sukses") {
+                swalWithBootstrapButtons.fire(
+                  'Deleted!',
+                  'Your file has been deleted.',
+                  'success'
+                );
+                location.reload();
+              } else {
+                swalWithBootstrapButtons.fire(
+                  'Failed',
+                  'Your file cannot be deleted.',
+                  'error'
+                );
+              }
+            },
+            error: function() {
+              swalWithBootstrapButtons.fire(
+                  'Error',
+                  'Server Error',
+                  'error'
+                );
+            }
+          });
+          
+        } 
+      })
+    }
 
   </script>

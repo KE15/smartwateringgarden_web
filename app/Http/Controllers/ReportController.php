@@ -62,13 +62,42 @@ class ReportController extends Controller
         try {
             $id = $request->input('id');
             DB::table('tdata')->where('id_Data', $id)->delete();
-            // Jika Anda ingin menghapus data dari 'tlog_Siram', Anda bisa menambahkannya di sini
-            // DB::table('tlog_Siram')->where('id_Data', $id)->delete();
+
+            $cekDBLog = DB::table('tlog_siram')
+            ->where('id_Data', $id)
+            ->get();
+
+            if($cekDBLog->count() > 0){
+                DB::table('tlog_Siram')->where('id_Data', $id)->delete();
+            }
             
             return response()->json([
                 'status' => 'sukses',
             ], 200);
         } catch (\Exception $th) {
+            return response()->json([
+                'status' => 'gagal: ' . $th->getMessage(),
+            ], 500);
+        }
+    }
+
+    public function DeleteDataByDate(Request $request)
+    {
+        try {
+            
+            $delete_StartDate = $request -> input('delete_startDate');
+            $delete_EndtDate = $request -> input('delete_endDate');
+            error_log($delete_StartDate.' '.$delete_EndtDate);
+
+            DB::table('tdata')
+            ->whereBetween('Waktu', [$delete_StartDate.' 00:00:00', $delete_EndtDate.' 23:59:59'])
+            ->delete();
+            
+            return response()->json([
+                'status' => 'sukses',
+            ], 200);
+        } catch (\Exception $th) {
+            error_log('error delete '.$th->getMessage());
             return response()->json([
                 'status' => 'gagal: ' . $th->getMessage(),
             ], 500);

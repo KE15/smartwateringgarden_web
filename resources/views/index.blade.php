@@ -303,7 +303,7 @@
             getDataChart();
             getDataDashboard();
             getDataLogsSiram();
-    }, 15 * 1000); // 60 = detik, 1000 = milisecond. 60 * 1000 = 1 menit
+    }, 60* 1000); // 60 = detik, 1000 = milisecond. 60 * 1000 = 1 menit
 
       $(document).ready(function() {
         
