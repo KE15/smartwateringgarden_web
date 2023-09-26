@@ -18,24 +18,6 @@ class ReportController extends Controller
         ->whereBetween(DB::raw('cast(Waktu as date)'), [$tanggalAwal, $tanggalAkhir])
         ->get();
 
-        // $value_avgkelembapan = $datas->pluck('TotalValue');
-        // $value_kelembapan1 = $datas->pluck('ValueKelembapan1');
-        // $value_kelembapan2 = $datas->pluck('ValueKelembapan2');
-        // $value_cahaya1 = $datas->pluck('ValueCahaya');
-        // $date = $datas->pluck('Tanggal');
-
-        // return response()->json([
-        //     'status' => 'oke',
-        //     'datas' => $datas,
-        //     'avgkelembapan_data'=> $value_avgkelembapan,
-        //     'kelembapan1_data' => $value_kelembapan1,
-        //     'kelembapan2_data' => $value_kelembapan2,
-        //     'cahaya_data' => $value_cahaya1,
-        //     'tanggal' => $date
-        // ]);
-        // //////////////////////////////////////////////////////////////////
-        // dd($datas);
-
         $value_kelembapan1 = $datas->pluck('ValueKelembapan1')->map(function ($item) {
             return (int) $item;
         });

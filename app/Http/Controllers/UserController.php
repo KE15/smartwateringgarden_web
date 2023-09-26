@@ -40,4 +40,40 @@ class UserController extends Controller
         $request->session()->regenerateToken();
         return redirect('login');
     }
+
+    public function callProfil(Request $request){
+        $idProfil = $request->input('id');
+
+        $dataProfil = DB::table('tUser')
+        ->where('id_User', $idProfil)
+        ->get();
+
+        // $NameProfil = $dataProfil->pluck('Nama');
+        // $UsernameProfil = $dataProfil->pluck('Username');
+        // $PasswordProfil = $dataProfil->pluck('Password');
+        // $PhoneProfil = $dataProfil->pluck('NoTelp');
+        // $ChatIdProfil = $dataProfil->pluck('Chat_id');
+
+        return response()->json([
+            'dataprofil' => $dataProfil]);
+
+        // return response()->json([
+        //     'status' => 'oke',
+        //     'name_data'=> $NameProfil,
+        //     'username_data' => $UsernameProfil,
+        //     'password_data' => $PasswordProfil,
+        //     'phone_data' => $PhoneProfil,
+        //     'chatid_data' => $ChatIdProfil
+        // ]);
+
+
+        // return view('profil')
+        //     ->with('dataProfil',$dataProfil)
+        //     ->with('name_data',$NameProfil)
+        //     ->with('username_data',$UsernameProfil)
+        //     ->with('password_data',$PasswordProfil)
+        //     ->with('phone_data',$PhoneProfil)
+        //     ->with('chatid_data',$ChatIdProfil);
+
+    }
 }

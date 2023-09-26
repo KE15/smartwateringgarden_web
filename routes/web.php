@@ -17,8 +17,6 @@ use Illuminate\Support\Facades\DB;
 Route::get('login', function(){
     return view('login');
 });
-
-// Route::get('login', [App\Http\Controllers\UserController::class, 'index']);
 Route::post('login', [App\Http\Controllers\UserController::class, 'loginAuth'])->name('loginAuth');
 Route::post('logout', [App\Http\Controllers\UserController::class, 'logout'])->name('logout');
 
@@ -37,6 +35,11 @@ Route::post('renderChartHome', [App\Http\Controllers\HomeController::class, 'ren
 Route::get('detailLogSiram', [App\Http\Controllers\HomeController::class, 'DetailLogSiram'])->name('detailLogSiram');
 
 Route::get('ReportByDate', [App\Http\Controllers\ReportController::class, 'ReportByDate'])->name('ReportByDate');
-// Route::post('/delete-data/{id}', [App\Http\Controllers\ReportController::class, 'DeleteData'])->name('DeleteData');
 Route::post('delete-data', [App\Http\Controllers\ReportController::class, 'DeleteData'])->name('DeleteData');
 Route::delete('deleteDataByDate', [App\Http\Controllers\ReportController::class, 'DeleteDataByDate'])->name('DeleteDataByDate');
+
+Route::get('profil', function(){
+    return view('profil');
+});
+
+Route::get('callProfil', [App\Http\Controllers\UserController::class, 'callProfil'])-> name('callProfil');
