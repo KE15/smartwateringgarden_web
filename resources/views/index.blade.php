@@ -66,6 +66,28 @@
               </div>
             </div><!-- End Sales Card -->
 
+            <!-- Sales Card -->
+            <div class="col-xxl-4 col-md-6">
+              <div class="card info-card sales-card">
+
+                <div class="card-body">
+                  <h5 class="card-title">Status Keterangan <span>| Today</span></h5>
+
+                  <div class="d-flex align-items-center">
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                      <i class="ri-sticky-note-line"></i>
+                    </div>
+                    <div class="ps-3">
+                      <h6 id="statusKet">
+                        -
+                      </h6>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div><!-- End Sales Card -->
+
             <!-- Revenue Card -->
             <div class="col-xxl-4 col-md-6">
               <div class="card info-card revenue-card">
@@ -194,6 +216,10 @@
                           <label for="inputName5" class="form-label">Average soil moiture</label>
                           <input type="text" class="form-control" id="modalAvgValue" disabled>
                         </div>
+                        <div class="col-md-12">
+                          <label for="inputName5" class="form-label">Status Information</label>
+                          <input type="text" class="form-control" id="modalStatKet" disabled>
+                        </div>
                         <div class="col-md-6">
                           <label for="inputName5" class="form-label">Soil moisture 1</label>
                           <input type="text" class="form-control" id="modalSoil1" disabled>
@@ -303,7 +329,7 @@
             getDataChart();
             getDataDashboard();
             getDataLogsSiram();
-    }, 60* 1000); // 60 = detik, 1000 = milisecond. 60 * 1000 = 1 menit
+    }, 15* 1000); // 60 = detik, 1000 = milisecond. 60 * 1000 = 1 menit
 
       $(document).ready(function() {
         
@@ -322,6 +348,7 @@
             if(data.datas.length > 0){
               $('#idDevice').text(data.datas[0].id_Device);
               $('#avgValue').text(data.datas[0].TotalValue);
+              $('#statusKet').text(data.datas[0].StatusKeterangan);
               $('#soil1').text(data.datas[0].ValueKelembapan1);
               $('#soil2').text(data.datas[0].ValueKelembapan2);
               $('#light1').text(data.datas[0].ValueCahaya);
@@ -371,6 +398,7 @@
                   console.log(data);
                     $('#modalIdData').text(data.data[0].id_Data);
                     $('#modalAvgValue').val(data.data[0].TotalValue);
+                    $('#modalStatKet').val(data.data[0].StatusKeterangan);
                     $('#modalSoil1').val(data.data[0].ValueKelembapan1);
                     $('#modalSoil2').val(data.data[0].ValueKelembapan2);
                     $('#modalLight1').val(data.data[0].ValueCahaya);
