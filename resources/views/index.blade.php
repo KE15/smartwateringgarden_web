@@ -329,7 +329,7 @@
             getDataChart();
             getDataDashboard();
             getDataLogsSiram();
-    }, 15* 1000); // 60 = detik, 1000 = milisecond. 60 * 1000 = 1 menit
+    }, 5 * 1000); // 60 = detik, 1000 = milisecond. 60 * 1000 = 1 menit
 
       $(document).ready(function() {
         
@@ -347,11 +347,11 @@
             console.log(data);
             if(data.datas.length > 0){
               $('#idDevice').text(data.datas[0].id_Device);
-              $('#avgValue').text(data.datas[0].TotalValue);
+              $('#avgValue').text(data.datas[0].TotalValue + '%');
               $('#statusKet').text(data.datas[0].StatusKeterangan);
-              $('#soil1').text(data.datas[0].ValueKelembapan1);
-              $('#soil2').text(data.datas[0].ValueKelembapan2);
-              $('#light1').text(data.datas[0].ValueCahaya);
+              $('#soil1').text(data.datas[0].ValueKelembapan1 + '%');
+              $('#soil2').text(data.datas[0].ValueKelembapan2 + '%');
+              $('#light1').text(data.datas[0].ValueCahaya + ' lux');
             }
             
           }
@@ -397,10 +397,10 @@
                 success: function(data) {
                   console.log(data);
                     $('#modalIdData').text(data.data[0].id_Data);
-                    $('#modalAvgValue').val(data.data[0].TotalValue);
+                    $('#modalAvgValue').val(data.data[0].TotalValue + '%');
                     $('#modalStatKet').val(data.data[0].StatusKeterangan);
-                    $('#modalSoil1').val(data.data[0].ValueKelembapan1);
-                    $('#modalSoil2').val(data.data[0].ValueKelembapan2);
+                    $('#modalSoil1').val(data.data[0].ValueKelembapan1 + '%');
+                    $('#modalSoil2').val(data.data[0].ValueKelembapan2 + '%');
                     $('#modalLight1').val(data.data[0].ValueCahaya);
                     $('#modalTanggal').text(data.data[0].Tanggal);
                     $('#modalWaktu').text(data.data[0].Jam);

@@ -149,14 +149,17 @@
                 <thead>
                   <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Average Value</th>
+                    <th scope="col">Avg Value</th>
+                    <th scope="col">Avg ADC</th>
                     <th scope="col">Soil Moisture 1</th>
+                    <th scope="col">ADC Soil 1</th>
                     <th scope="col">Soil Moisture 2</th>
+                    <th scope="col">ADC Soil 2</th>
                     <th scope="col">Light Intensity</th>
                     <th scope="col">Relay Status</th>
                     <th scope="col">Date</th>
                     <th scope="col">Time</th>
-                    <th scope="col">Action</th>
+                    <!-- <th scope="col">Action</th> -->
                   </tr>
                 </thead>
                 <tbody>
@@ -164,24 +167,21 @@
                     @foreach($datas as $key =>$d)
                     <tr>
                       <th scope="row">{{ $key + 1 }}</th>
-                      <td>{{ $d -> TotalValue }}</td>
-                      <td>{{ $d -> ValueKelembapan1 }}</td>
-                      <td>{{ $d -> ValueKelembapan2 }}</td>
-                      <td>{{ $d -> ValueCahaya }}</td>
+                      <td>{{ $d -> TotalValue }}%</td>
+                      <td>{{ $d -> AdcTotal }}</td>
+                      <td>{{ $d -> ValueKelembapan1 }}%</td>
+                      <td>{{ $d -> AdcKelembapan1 }}</td>
+                      <td>{{ $d -> ValueKelembapan2 }}%</td>
+                      <td>{{ $d -> AdcKelembapan2 }}</td>
+                      <td>{{ $d -> ValueCahaya }} lx</td>
                       <td>{{ $d -> StatusRelay }}</td>
                       <td>{{ $d -> Tanggal }}</td>
                       <td>{{ $d -> Waktu }}</td>
-                      <td>
-                        <!-- <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#basicModal" data-id="{{ $d -> id_Data }}">
-                          <i class="bi bi-info-circle"></i>
-                        </button> -->
-                        <!-- <form role="form" method="POST" action="{{ route('DeleteData', ['id' => $d->id_Data]) }}"> -->
-                          <!-- @csrf -->
+                      <!-- <td>
                           <button type="submit" onclick="delete_data('{{ $d -> id_Data }}')" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#basicModal">
                               <i class="bi bi-trash-fill"></i>
                           </button>
-                      <!-- </form> -->
-                      </td>
+                      </td> -->
                     </tr>
                     @endforeach
                     @endisset

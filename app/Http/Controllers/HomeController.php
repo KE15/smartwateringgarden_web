@@ -39,7 +39,7 @@ class HomeController extends Controller
         // $timetoday = '2023-09-14';
         $timetoday = date('Y-m-d'); 
         $datas = DB::table('tdata')
-        ->select('TotalValue', 'ValueKelembapan1', 'ValueKelembapan2', 'StatusKeterangan', 'ValueCahaya', 'id_Device')
+        ->select('TotalValue','AdcTotal', 'ValueKelembapan1', 'AdcKelembapan1', 'ValueKelembapan2', 'AdcKelembapan2', 'StatusKeterangan', 'ValueCahaya', 'id_Device')
         ->where(DB::raw('cast(Waktu as date)'), $timetoday)
         ->orderBy('id_Data', 'desc')
         ->take(1)
