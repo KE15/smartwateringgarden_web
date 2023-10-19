@@ -43,3 +43,5 @@ Route::get('profil', function(){
 });
 
 Route::get('callProfil', [App\Http\Controllers\UserController::class, 'callProfil'])-> name('callProfil');
+
+Route::post('updateDevice', [App\Http\Controllers\DeviceControlller::class, 'UpdateDevice'])-> name('updateDevice');

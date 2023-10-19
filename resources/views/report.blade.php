@@ -155,6 +155,7 @@
                     <th scope="col">ADC Soil 1</th>
                     <th scope="col">Soil Moisture 2</th>
                     <th scope="col">ADC Soil 2</th>
+                    <th scope="col">Status Information</th>
                     <th scope="col">Light Intensity</th>
                     <th scope="col">Relay Status</th>
                     <th scope="col">Date</th>
@@ -173,6 +174,7 @@
                       <td>{{ $d -> AdcKelembapan1 }}</td>
                       <td>{{ $d -> ValueKelembapan2 }}%</td>
                       <td>{{ $d -> AdcKelembapan2 }}</td>
+                      <td>{{ $d -> StatusKeterangan }}</td>
                       <td>{{ $d -> ValueCahaya }} lx</td>
                       <td>{{ $d -> StatusRelay }}</td>
                       <td>{{ $d -> Tanggal }}</td>

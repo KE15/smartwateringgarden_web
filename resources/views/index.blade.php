@@ -24,6 +24,54 @@
             <div class="col-xxl-4 col-md-6">
               <div class="card info-card sales-card">
 
+                <div class="filter">
+                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                    <!-- <li class="dropdown-header text-start">
+                      <h6></h6>
+                    </li> -->
+
+                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#ModalDetailDevice">Detail</a></li>
+                  </ul>
+                </div>
+
+                <div class="modal fade" id="ModalDetailDevice" tabindex="-1">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title">Detail Device</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <!-- Multi Columns Form -->
+                        <form class="row g-3" method="POST" action="{{ route('updateDevice') }}">
+                          @csrf
+                              <div class="col-md-12">
+                                  <input type="hidden" class="form-control" id="Ket_idDevice" name="idDevice">
+                              </div>
+                              <div class="col-md-12">
+                                  <label for="inputName5" class="form-label">Device Name</label>
+                                  <input type="text" class="form-control" id="DeviceName" name="nameDevice">
+                              </div>
+                              <div class="col-sm-10">
+                                <label for="inputName5" class="form-label">Information Device</label>
+                                <textarea class="form-control" style="height: 100px" id="InformationDevice" name="infoDevice"></textarea>
+                              </div>
+                              <div class="col-md-12">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Save changes</button>
+                              </div>
+                        </form>
+                        <!-- End Multi Columns Form -->
+                      </div>
+                      <!-- <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                      </div> -->
+                    </div>
+                  </div>
+                </div>
+
                 <div class="card-body">
                   <h5 class="card-title">ID Device IoT</h5>
 
@@ -329,7 +377,7 @@
             getDataChart();
             getDataDashboard();
             getDataLogsSiram();
-    }, 5 * 1000); // 60 = detik, 1000 = milisecond. 60 * 1000 = 1 menit
+    }, 600 * 1000); // 60 = detik, 1000 = milisecond. 60 * 1000 = 1 menit
 
       $(document).ready(function() {
         
@@ -352,6 +400,9 @@
               $('#soil1').text(data.datas[0].ValueKelembapan1 + '%');
               $('#soil2').text(data.datas[0].ValueKelembapan2 + '%');
               $('#light1').text(data.datas[0].ValueCahaya + ' lux');
+              $('#Ket_idDevice').val(data.datas[0].id_Device);
+              $('#DeviceName').val(data.dataDevice[0].NamaDevice);
+              $('#InformationDevice').val(data.dataDevice[0].KeteranganDevice);
             }
             
           }
