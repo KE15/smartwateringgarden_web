@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Login - Smart Watering Garden</title>
+  <title>Register - Smart Watering Garden</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -60,13 +60,37 @@
                 <div class="card-body">
 
                   <div class="pt-4 pb-2">
-                    <h5 class="card-title text-center pb-0 fs-4">Login to Your Account</h5>
-                    <p class="text-center small">Enter your username & password to login</p>
+                    <h5 class="card-title text-center pb-0 fs-4">Register to make new account</h5>
+                    <p class="text-center small">Fill your details to register</p>
                   </div>
 
-                  <form class="row g-3 needs-validation" action="{{ route('loginAuth') }}" method="POST" novalidate>
+                  <form class="row g-3 needs-validation" action="{{ route('registerAcc') }}" method="POST" novalidate>
                     @csrf
 
+                    <div class="col-12">
+                      <label for="yourName" class="form-label">Name</label>
+                      <div class="input-group has-validation">
+                        <input type="text" name="name" class="form-control" id="yourName" required>
+                        <div class="invalid-feedback">Please enter your name.</div>
+                      </div>
+                    </div>
+
+                    <div class="col-12">
+                      <label for="yourName" class="form-label">Chat Id</label>
+                      <div class="input-group has-validation">
+                        <input type="text" name="chatid" class="form-control" id="yourChatId" required>
+                        <div class="invalid-feedback">Please enter your chat id.</div>
+                      </div>
+                    </div>
+
+                    <div class="col-12">
+                      <label for="yourName" class="form-label">Telp Number</label>
+                      <div class="input-group has-validation">
+                        <input type="text" name="notelp" class="form-control" id="yourNoTelp" required>
+                        <div class="invalid-feedback">Please enter your telp number.</div>
+                      </div>
+                    </div>
+                    
                     <div class="col-12">
                       <label for="yourUsername" class="form-label">Username</label>
                       <div class="input-group has-validation">
@@ -83,9 +107,7 @@
                     </div>
 
                     <div class="col-12">
-                      <button class="btn btn-primary w-100" type="submit">Login</button>
-                      <br>
-                      <p class="text-center small"><a href="/register">Register</a> if you dont have an account.</p> 
+                      <button class="btn btn-primary w-100" type="submit">Register</button>
                     </div>
                   </form>
 

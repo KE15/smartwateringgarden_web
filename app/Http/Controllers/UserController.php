@@ -35,6 +35,35 @@ class UserController extends Controller
         
     }
 
+    public function registerAcc(Request $request)
+    {
+        $reqName = $request->input('name');
+        $reqChatId = $request->input('chatid');
+        $reqTelpNumber = $request->input('notelp');
+        $reqUsername = $request->input('username');
+        $reqPassword =  $request->input('password');
+
+        
+        $userId = DB::table('tuser')->insertGetId([
+            'Nama' => $reqName,
+            'Chat_Id' => $reqChatId,
+            'NoTelp' => $reqTelpNumber,
+            'Username' => $reqUsername,
+            'Password' => $reqPassword
+            // 'Password' => bcrypt($reqPassword),
+        ]);
+
+        
+        if ($userId) {
+            // Registrasi berhasil, arahkan pengguna ke halaman login
+            return redirect('/login')->with('success', 'Registration successful! Please login with your credentials.');
+        } else {
+            // Registrasi gagal, dapatkan pesan kesalahan atau lakukan sesuatu yang sesuai
+            return response()->json(['error' => 'Registration failed']);
+        }
+
+    }
+
     public function logout(Request $request){
         $request->session()-> invalidate();
         $request->session()->regenerateToken();
