@@ -18,32 +18,50 @@ class UserController extends Controller
         $reqUser = $request->input('username');
         $reqPass = $request->input('password');
 
-        error_log($reqUser . '' . $reqPass);
+        error_log($reqUser .''. $reqPass);
 
         $dataUser = DB::table('tUser')
-            ->where('Username', $reqUser)
-            ->first();
+        ->where('Username', $reqUser)
+        ->first();
 
         if ($dataUser && $reqPass == $dataUser->Password) {
-            // Cek apakah user memiliki device
-            $userDevices = DB::table('tDevice')
-                ->where('id_User', $dataUser->id_User)
-                ->get();
+            $request->session()->regenerate();
+            session(['idUser' => $dataUser->id_User, 'username' => $dataUser->Username, 'name' => $dataUser->Nama]);
+            return redirect() -> route('index');
 
-            if ($userDevices->count() > 0) {
-                // User has at least one associated device
-                $request->session()->regenerate();
-                session(['idUser' => $dataUser->id_User, 'username' => $dataUser->Username, 'name' => $dataUser->Nama]);
-                return redirect()->route('index');
-            } else {
-                // No associated devices found, redirect to page not found
-                return abort(404);
-            }
         }
-
+        
         return redirect('login');
+        
+    }
+
+    public function registerAcc(Request $request)
+    {
+        $reqName = $request->input('name');
+        $reqChatId = $request->input('chatid');
+        $reqTelpNumber = $request->input('notelp');
+        $reqUsername = $request->input('username');
+        $reqPassword =  $request->input('password');
 
         
+        $userId = DB::table('tuser')->insertGetId([
+            'Nama' => $reqName,
+            'Chat_Id' => $reqChatId,
+            'NoTelp' => $reqTelpNumber,
+            'Username' => $reqUsername,
+            'Password' => $reqPassword
+            // 'Password' => bcrypt($reqPassword),
+        ]);
+
+        
+        if ($userId) {
+            // Registrasi berhasil, arahkan pengguna ke halaman login
+            return redirect('/login')->with('success', 'Registration successful! Please login with your credentials.');
+        } else {
+            // Registrasi gagal, dapatkan pesan kesalahan atau lakukan sesuatu yang sesuai
+            return response()->json(['error' => 'Registration failed']);
+        }
+
     }
 
     public function logout(Request $request){
@@ -87,34 +105,4 @@ class UserController extends Controller
         //     ->with('chatid_data',$ChatIdProfil);
 
     }
-
-    public function registerAcc(Request $request)
-    {
-        $reqName = $request->input('name');
-        $reqChatId = $request->input('chatid');
-        $reqTelpNumber = $request->input('notelp');
-        $reqUsername = $request->input('username');
-        $reqPassword =  $request->input('password');
-
-        
-        $userId = DB::table('tuser')->insertGetId([
-            'Nama' => $reqName,
-            'Chat_Id' => $reqChatId,
-            'NoTelp' => $reqTelpNumber,
-            'Username' => $reqUsername,
-            'Password' => $reqPassword
-            // 'Password' => bcrypt($reqPassword),
-        ]);
-
-        
-        if ($userId) {
-            // Registrasi berhasil, arahkan pengguna ke halaman login
-            return redirect('/login')->with('success', 'Registration successful! Please login with your credentials.');
-        } else {
-            // Registrasi gagal, dapatkan pesan kesalahan atau lakukan sesuatu yang sesuai
-            return response()->json(['error' => 'Registration failed']);
-        }
-
-    }
-
 }

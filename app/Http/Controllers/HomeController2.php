@@ -14,7 +14,7 @@ class HomeController extends Controller
         $timetoday = date('Y-m-d'); 
         $datas = DB::table('tdata')
         ->select('TotalValue', 'ValueKelembapan1','ValueKelembapan2', 'ValueCahaya' , 'Waktu')
-        ->where(DB::raw('cast(Waktu as date)'), $timetoday)
+        ->whereRaw('DATE(Waktu) = ?', $timetoday)
         ->get();
         $value_avgkelembapan = $datas->pluck('TotalValue');
         $value_kelembapan1 = $datas->pluck('ValueKelembapan1');
@@ -36,12 +36,12 @@ class HomeController extends Controller
     {   
         $timetoday = date('Y-m-d'); 
         $datas = DB::table('tdata')
-        ->select('TotalValue','AdcTotal', 'ValueKelembapan1', 'AdcKelembapan1', 'ValueKelembapan2', 'AdcKelembapan2', 'StatusKeterangan', 'ValueCahaya', 'id_Device', DB::raw('cast(Waktu as time(0)) as Waktu'))
-        ->where(DB::raw('cast(Waktu as date)'), $timetoday)
+        ->select('TotalValue', 'AdcTotal', 'ValueKelembapan1', 'AdcKelembapan1', 'ValueKelembapan2', 'AdcKelembapan2', 'StatusKeterangan', 'ValueCahaya', 'id_Device', DB::raw('TIME_FORMAT(Waktu, "%H:%i:%s") as Waktu'))
+        ->whereRaw('DATE(Waktu) = ?', [$timetoday])
         ->orderBy('id_Data', 'desc')
         ->take(1)
         ->get();
-
+        
         $value_idDevice = $datas->pluck('id_Device');
 
         $dataslogsiram = DB::table('tlog_Siram')

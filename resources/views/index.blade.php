@@ -399,7 +399,7 @@
               $('#statusKet').text(data.datas[0].StatusKeterangan);
               $('#soil1').text(data.datas[0].ValueKelembapan1 + '%');
               $('#soil2').text(data.datas[0].ValueKelembapan2 + '%');
-              $('#light1').text(data.datas[0].ValueCahaya + ' lux');
+              $('#light1').text(Math.round((parseFloat(data.datas[0].ValueCahaya)+ Number.EPSILON) * 100) / 100  + ' lux');
               $('#Ket_idDevice').val(data.datas[0].id_Device);
               $('#DeviceName').val(data.dataDevice[0].NamaDevice);
               $('#InformationDevice').val(data.dataDevice[0].KeteranganDevice);
