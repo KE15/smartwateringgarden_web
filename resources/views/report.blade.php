@@ -175,7 +175,7 @@
                       <td>{{ $d -> ValueKelembapan2 }}%</td>
                       <td>{{ $d -> AdcKelembapan2 }}</td>
                       <td>{{ $d -> StatusKeterangan }}</td>
-                      <td>{{ $d -> ValueCahaya }} lx</td>
+                      <td>{{ number_format($d->ValueCahaya, 2) }} lx</td>
                       <td>{{ $d -> StatusRelay }}</td>
                       <td>{{ $d -> Tanggal }}</td>
                       <td>{{ $d -> Waktu }}</td>

@@ -14,7 +14,9 @@ class ReportController extends Controller
         $tanggalAkhir = $request->input('endDate');
 
         $datas = DB::table('tdata')
-        ->select('id_Data', 'TotalValue', 'AdcTotal', 'ValueKelembapan1', 'AdcKelembapan1', 'ValueKelembapan2', 'AdcKelembapan2', 'ValueCahaya', 'StatusRelay' , 'StatusKeterangan',
+        ->select('id_Data', 'TotalValue', 'AdcTotal', 'ValueKelembapan1', 'AdcKelembapan1', 'ValueKelembapan2', 'AdcKelembapan2', 
+                    DB::raw('ROUND(ValueCahaya, 2) as ValueCahaya'), 
+                    'StatusRelay' , 'StatusKeterangan',
                     DB::raw('cast(Waktu as time(0)) as Waktu') , DB::raw('cast(Waktu as date) as Tanggal'))
         ->whereBetween(DB::raw('cast(Waktu as date)'), [$tanggalAwal, $tanggalAkhir])
         ->get();

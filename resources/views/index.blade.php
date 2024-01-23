@@ -377,7 +377,7 @@
             getDataChart();
             getDataDashboard();
             getDataLogsSiram();
-    }, 3 * 1000); // 60 = detik, 1000 = milisecond. 60 * 1000 = 1 menit
+    }, 10 * 1000); // 60 = detik, 1000 = milisecond. 60 * 1000 = 1 menit
 
       $(document).ready(function() {
         
@@ -452,7 +452,7 @@
                     $('#modalStatKet').val(data.data[0].StatusKeterangan);
                     $('#modalSoil1').val(data.data[0].ValueKelembapan1 + '%');
                     $('#modalSoil2').val(data.data[0].ValueKelembapan2 + '%');
-                    $('#modalLight1').val(data.data[0].ValueCahaya);
+                    $('#modalLight1').val(Math.round((parseFloat(data.data[0].ValueCahaya) + Number.EPSILON) * 100) / 100 );
                     $('#modalTanggal').text(data.data[0].Tanggal);
                     $('#modalWaktu').text(data.data[0].Jam);
                 }
