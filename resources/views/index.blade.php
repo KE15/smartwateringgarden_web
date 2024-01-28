@@ -49,13 +49,38 @@
                               <div class="col-md-12">
                                   <input type="hidden" class="form-control" id="Ket_idDevice" name="idDevice">
                               </div>
+                              <fieldset class="row mb-3">
+                                <legend class="col-form-label col-sm-2 pt-0">Opsi</legend>
+                                <div class="col-sm-10">
+                                  <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="0">
+                                    <label class="form-check-label" for="gridRadios1">
+                                      Automatic
+                                    </label>
+                                  </div>
+                                  <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="1">
+                                    <label class="form-check-label" for="gridRadios2">
+                                      Schedule
+                                    </label>
+                                  </div>
+                                </div>
+                              </fieldset>
                               <div class="col-md-12">
-                                  <label for="inputName5" class="form-label">Device Name</label>
+                                  <label for="inputName5" class="form-label">Nama Device</label>
                                   <input type="text" class="form-control" id="DeviceName" name="nameDevice">
                               </div>
                               <div class="col-sm-10">
-                                <label for="inputName5" class="form-label">Information Device</label>
+                                <label for="inputName5" class="form-label">Keterangan Device</label>
                                 <textarea class="form-control" style="height: 100px" id="InformationDevice" name="infoDevice"></textarea>
+                              </div>
+                              <div class="col-md-12">
+                                  <label for="inputName5" class="form-label">Debit Air | Jam/Liter</label>
+                                  <input type="number" class="form-control" id="DebitAir" name="debitAir">
+                              </div>
+                              <div class="col-md-12">
+                                  <label for="inputName5" class="form-label">Volume Air | Liter</label>
+                                  <input type="number" class="form-control" id="VolumeAir" name="volumeAir">
                               </div>
                               <div class="col-md-12">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -377,7 +402,7 @@
             getDataChart();
             getDataDashboard();
             getDataLogsSiram();
-    }, 10 * 1000); // 60 = detik, 1000 = milisecond. 60 * 1000 = 1 menit
+    }, 120 * 1000); // 60 = detik, 1000 = milisecond. 60 * 1000 = 1 menit
 
       $(document).ready(function() {
         
@@ -403,6 +428,14 @@
               $('#Ket_idDevice').val(data.datas[0].id_Device);
               $('#DeviceName').val(data.dataDevice[0].NamaDevice);
               $('#InformationDevice').val(data.dataDevice[0].KeteranganDevice);
+              $('#DebitAir').val(data.dataDevice[0].Debit_air);
+              $('#VolumeAir').val(data.dataDevice[0].Volume_air);
+              // Atur radio button berdasarkan is_schedule
+              if (data.dataDevice[0].is_Schedule == "0" || data.dataDevice[0].is_Schedule == 0  ) {
+                    $('#gridRadios1').prop('checked', true);
+                } else if (data.dataDevice[0].is_Schedule == "1" || data.dataDevice[0].is_Schedule == 1 ) {
+                    $('#gridRadios2').prop('checked', true);
+              }
             }
             
           }

@@ -42,7 +42,8 @@ class HomeController extends Controller
         ->take(1)
         ->get();
 
-        $value_idDevice = $datas->pluck('id_Device');
+        $value_idDevice = $datas->pluck('id_Device')->first();
+        session(['idDevice' => $value_idDevice]);
 
         $dataslogsiram = DB::table('tlog_Siram')
         ->select('id_LogSiram', DB::raw('cast(Waktu as time(0)) as Waktu'), 'id_Data')
@@ -51,7 +52,7 @@ class HomeController extends Controller
         ->get();
 
         $getNamaDevice = DB::table('tdevice')
-        ->select('NamaDevice', 'KeteranganDevice')
+        ->select('NamaDevice', 'KeteranganDevice', 'is_Schedule', 'Debit_air', 'Volume_air')
         ->where('id_Device', $value_idDevice)
         ->get();
 

@@ -30,6 +30,8 @@ Route::get('/report', function () {
     ]);
 })->name('report');
 
+Route::get('/schedule', [App\Http\Controllers\DeviceControlller::class, 'getSchedule'])->name('schedule');
+
 Route::get('datasToday', [App\Http\Controllers\HomeController::class, 'DatasToday'])-> name('datasToday');
 Route::post('renderChartHome', [App\Http\Controllers\HomeController::class, 'renderChartHome'])->name('renderChartHome');
 Route::get('detailLogSiram', [App\Http\Controllers\HomeController::class, 'DetailLogSiram'])->name('detailLogSiram');
@@ -51,3 +53,12 @@ Route::get('register', function(){
 });
 
 Route::post('register', [App\Http\Controllers\UserController::class, 'registerAcc'])->name('registerAcc');
+
+
+Route::post('/auto-scheduling', [App\Http\Controllers\DeviceControlller::class, 'AutoSchedule'])->name('AutoScheduling');
+
+Route::get('deviceDetail', [App\Http\Controllers\DeviceControlller::class, 'getDetailDevice'])-> name('getDetailDevice');
+
+Route::post('addSchedule', [App\Http\Controllers\DeviceControlller::class, 'scheduleAdd'])->name('scheduleAdd');
+Route::get('getSchedule', [App\Http\Controllers\DeviceControlller::class, 'getSchedule'])-> name('getSchedule');
+Route::post('delete-schedule', [App\Http\Controllers\DeviceControlller::class, 'DeleteSchedule'])->name('DeleteSchedule');
